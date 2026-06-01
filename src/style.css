@@ -61,6 +61,9 @@ h2 {
   color: var(--text-h);
 }
 
+li{
+  list-style-type: none;
+}
 h1 {
   font-size: 56px;
   letter-spacing: -1.68px;

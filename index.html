@@ -5,13 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/jsa-vite/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>jsa-vite-webpage</title>
-    <script type="module" crossorigin src="/jsa-vite/assets/index-BKKEaAbI.js"></script>
-    <link rel="stylesheet" crossorigin href="/jsa-vite/assets/index-CA3E9aEF.css">
+    <script type="module" crossorigin src="/jsa-vite/assets/index-Bb5UYa6U.js"></script>
+    <link rel="stylesheet" crossorigin href="/jsa-vite/assets/index-DiJMm7vY.css">
   </head>
   <body>
     <div id="app">
       <form id="user-form">
         <label>
+          Username:
           <input
             id="username"
             name="username"
@@ -21,6 +22,7 @@
         </label>
 
         <label>
+          E-Mail:
           <input
             id="email"
             name="email"
@@ -28,6 +30,11 @@
             placeholder="email"
             value="test@test.com"
           />
+        </label>
+
+        <label>
+          Password:
+          <input name="password" type="password" />
         </label>
         <button type="submit">Create</button>
       </form>
@@ -38,16 +45,29 @@
       <form id="edit-form">
         <label>
           Username:
-          <input data-edit-username />
+          <input id="username-edit" name="username" data-edit-username />
         </label>
 
         <label>
           Email:
-          <input data-edit-email />
+          <input id="email-edit" type="email" name="email" data-edit-email />
         </label>
 
-        <button>Cancel</button>
-        <button type="submit">Save</button>
+        <div id="actions">
+          <button type="button">Cancel</button>
+          <button type="submit">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="password-modal">
+      <form id="password-form">
+        <label
+          >Password:
+          <input name="password" type="password" />
+        </label>
+        <button type="submit">Login</button>
+        <button type="button">Cancel</button>
       </form>
     </dialog>
   </body>

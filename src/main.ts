@@ -3,6 +3,9 @@ import { v7 } from 'uuid';
 import type { UserForm } from './types/UserForm';
 import * as db from './userDb';
 import type { User } from './types/User';
+import { showEditModal } from './editUserModal';
+import * as bcrypt from 'bcryptjs';
+import { showPasswordModal } from './passwordModal';
 
 const form = document.querySelector("form") as HTMLFormElement;
 const ul = document.querySelector("ul") as HTMLUListElement;
@@ -13,13 +16,19 @@ document.addEventListener("DOMContentLoaded", () => {
   renderUI();
 });
 
-form?.addEventListener("submit", (e: SubmitEvent) => {
+form?.addEventListener("submit", async (e: SubmitEvent) => {
   e.preventDefault();
-  const formData = new FormData(form);
-  const userData = Object.fromEntries(formData) as unknown as UserForm;
 
+  //convert formdata to UserForm
+  const formData = Object.fromEntries(new FormData(form)) as unknown as UserForm;
 
-  db.addUser({...userData, id: v7()});
+  //destructure the formdata so we can separate password and data that should be stored
+  const  {password, ...userData} = formData;
+
+  const passwordHash = await bcrypt.hash(password, 12);
+  //store user in database, with a new GUIDV7 and with a generated password hash
+  db.addUser({...userData, id: v7(), passwordHash: passwordHash});
+
   renderUI();
 });
 
@@ -44,6 +53,7 @@ function generateLiElement({username, email, id}: User): string{
     <li data-userId="${id}">ID: ${id} Username: ${username} E-Mail: ${email}
       <button data-button-type="edit" type="button" data-userID="${id}">Edit</button>
       <button data-button-type="delete" type="button" data-userID="${id}">Delete</button>
+      <button data-button-type="password" type="button" data-userID="${id}">Login</button>
     </li>
   `;
 }
@@ -74,10 +84,21 @@ function handleLiButtonClick(userId: string, action: string){
   }
 
   if(action=== "edit"){
-    console.log("edit user");
-    editUserContext = db.getUser(userId) ?? null;
+    //user SHOULD be guranteed since the button is attached to an user
+    const user = db.getUser(userId)!;
+
+    //show the modal to edit the user, and receive a notification when its been saved
+    showEditModal(user, (editedUser) => {
+      db.editUser(editedUser);
+      renderUI();
+    });
+
     renderUI();
     return;
+  }
+
+  if(action === "password"){
+    showPasswordModal(userId);
   }
 
 }

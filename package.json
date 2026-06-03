@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy":"gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "gh-pages": "^6.3.0",
@@ -19,6 +19,7 @@
   "dependencies": {
     "@vitejs/plugin-react": "^6.0.2",
     "axios": "^1.16.1",
+    "bcryptjs": "^3.0.3",
     "date-fns": "^4.3.0",
     "uuid": "^14.0.0"
   }

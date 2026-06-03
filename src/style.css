@@ -297,3 +297,32 @@ code {
     border-right-color: var(--border);
   }
 }
+
+
+
+#edit-modal, #password-modal{
+  position:absolute;
+  top: 50%;
+  left:50%;
+  translate: -50% -50%;
+  border-radius: 20px;
+}
+
+#edit-modal form, #password-modal form{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#edit-modal label{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 5px;
+}
+
+
+#actions{
+  display: flex;
+  justify-content: space-evenly;
+}
